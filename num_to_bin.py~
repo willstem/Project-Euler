@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri May 11 14:43:51 2018
+
+@author: willstem
+"""
+
+def num_to_bin(n):
+    return int("{:b}".format(n))
+
+
+test = 2**10
+print num_to_bin(test)
