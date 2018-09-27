@@ -6,7 +6,6 @@ Created on Wed May  9 11:18:04 2018
 """
 
 from math import sqrt
-from itertools import combinations_with_replacement, permutations
 
 def is_prime(n):
     if n % 2 == 0 and n > 2 or n <= 1:
@@ -17,7 +16,7 @@ def is_prime(n):
     return True
 
 
-trunc_count = 0 #We are told there are only 11. I will break after 11 are found.
+trunc_count = 4 #We are told there are only 11. I will break after 11 are found.
 
 #My idea is to find all 2-digit primes that also have 1-digit primes
 #and then appending numbers to right and checking if they're prime.
@@ -25,8 +24,31 @@ trunc_count = 0 #We are told there are only 11. I will break after 11 are found.
 #Notes: can only add odd numbers, but 2 to the far LHS of the number is possible.
 
 trunc_primes = set()
+trunc_primes = {23, 37, 53, 73} #two-digit truncatable primes
 trunc_sum = 0
 
+for n in xrange(101,1000000):
+    flag = 0
+    n_str = str(n)
+    if is_prime(n) and is_prime(int(n_str[0])) and is_prime(int(n_str[-1])):
+        for ind in xrange(1, len(n_str)-1):
+            #check if it truncates left:
+            if not is_prime(int(n_str[:-ind])):
+                flag = 1
+            #check if it truncates right:
+            if not is_prime(int(n_str[ind:])):
+                flag = 1
+        if flag == 0:
+            trunc_primes.add(n)
+            trunc_count += 1
+    if trunc_count == 11:
+        print "done!"
+        break
+
+trunc_sum = sum(trunc_primes)
+print "sum:", trunc_sum
+
+"""
 for n in xrange(13,101,2):
     n_str = str(n)
     if is_prime(n) and is_prime(int(n_str[0])) and is_prime(int(n_str[1])):
@@ -57,3 +79,4 @@ for n in xrange(13,101,2):
                             trunc_primes.add(int(check_str_l))
                             trunc_sum += n
                             trunc_count += 1
+"""
