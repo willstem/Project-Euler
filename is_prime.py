@@ -10,6 +10,8 @@ def is_prime(n):
 
 primes = []
 def prime_factors(n):
+    #Warning: This does not find ALL prime factors. Often there is a prime
+    #factor N = 2*p which is of order N/2, not sqrt(N).
     for i in xrange(2, int(sqrt(n))):
         if n % i == 0:
             if is_prime(i):
